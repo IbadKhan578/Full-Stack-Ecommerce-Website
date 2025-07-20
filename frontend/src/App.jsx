@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {Routes,Route} from 'react-router-dom';
 import Home from './pages/Home';
 import Collection from './pages/Collection'
@@ -10,9 +10,23 @@ import Login from './pages/Login';
 import PlaceOrder from './pages/PlaceOrder';
 import Orders from './pages/Orders';
 import Navbar from './components/Navbar';
-
+import AOS from 'aos';
+import 'aos/dist/aos.css'; // Import AOS styles
 
 const App = () => {
+useEffect(()=>{
+  AOS.init(
+    {
+      duration:1000,
+      once:false,
+        mirror: true, // 👈 this adds reverse scroll effect
+
+    }
+  )
+
+},[])
+
+  
   return (
     <div className='px-4 sm:px-[5vw]  md:px-[7vw] lg:px-[9vw]'>
       <Navbar />
