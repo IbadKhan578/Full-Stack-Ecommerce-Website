@@ -2,7 +2,7 @@ import { createContext } from "react";
 import { products } from "../assets/assets";
 export const shopContext = createContext();
 
-const shopcontextProvider = (props) => {
+const ShopContextProvider = (props) => {
   const currency = "$";
   const delivery_fee = 250;
 
@@ -19,4 +19,4 @@ const shopcontextProvider = (props) => {
   );
 };
 
-export default shopcontextProvider;
+export default ShopContextProvider;

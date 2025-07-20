@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
 import {assets} from '../assets/assets';
-import { NavLink,Link } from 'react-router-dom';
+import { NavLink,Link,useNavigate } from 'react-router-dom';
 
 function Navbar() {
     const [visible,setVisible] = useState(false);
+    const Navigate = useNavigate();
+
   return (
     <div className='flex items-center justify-between py-5 font-medium' >
-        <img src={assets.logo} className='w-36' alt="" />
+        <img onClick={()=> Navigate('/') }src={assets.logo} className='w-36' alt="" />
         <ul className='hidden sm:flex gap-5 text-sm text-gray-700'>
             <NavLink to='/' className='flex flex-col items-center gap-1 '>
                 <p>Home</p>
