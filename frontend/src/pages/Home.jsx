@@ -15,8 +15,7 @@ const Home = () => {
     <BestSeller />
     <OurPolicy />
     <NewLetterBox />
-    <Footer />
-    <CopyRight />
+    
 
     </>
   )

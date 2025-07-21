@@ -12,6 +12,8 @@ import Orders from './pages/Orders';
 import Navbar from './components/Navbar';
 import AOS from 'aos';
 import 'aos/dist/aos.css'; // Import AOS styles
+import Footer from './components/Footer';
+import CopyRight from './components/CopyRight';
 
 const App = () => {
 useEffect(()=>{
@@ -40,10 +42,9 @@ useEffect(()=>{
         <Route path='/login' element={<Login/>}/>
         <Route path='/place-order' element={<PlaceOrder/>}/>
         <Route path='/orders' element={<Orders/>}/>
-
-
-
       </Routes>
+      <Footer />
+      <CopyRight />
 
     </div>
   )
