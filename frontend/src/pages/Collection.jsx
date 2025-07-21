@@ -6,7 +6,7 @@ import Productitem from '../components/Productitem.jsx'
 
 const Collection = () => {
   const [showFilter, setShowFilter] = useState(false);
-  const {products} = useContext(shopContext);
+  const {products, search , showSearch} = useContext(shopContext);
   const [filteredProduct,setFilteredProduct ] = useState([]);
   const [category,setCategory] = useState([]);
   const [subCategory,setSubCategory] = useState([]);
@@ -43,11 +43,17 @@ const Collection = () => {
    const applyFilter =()=>{
 
     let productCopy = products.slice();
+    if(showSearch && search){
+      productCopy = productCopy.filter((item)=> item.name.toLowerCase().includes(search.toLowerCase()))
+    }
+
+
     if(category.length>0){
       productCopy = productCopy.filter((item)=> category.includes(item.category));
     }
     if(subCategory.length>0){
       productCopy = productCopy.filter((item)=> subCategory.includes(item.subCategory));
+    setFilteredProduct(productCopy);
     }
     setFilteredProduct(productCopy);
 

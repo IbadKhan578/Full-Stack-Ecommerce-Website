@@ -1,11 +1,16 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import {assets} from '../assets/assets';
 import { NavLink,Link,useNavigate } from 'react-router-dom';
+import { shopContext } from '../context/ShopContext';
 
 function Navbar() {
     const [visible,setVisible] = useState(false);
     const Navigate = useNavigate();
-
+      let {setShowSearch} = useContext(shopContext);
+      const handleSearchClick=()=>{
+        Navigate('/collection')
+        setShowSearch(true);
+      }
   return (
     <div className='flex items-center justify-between py-5 font-medium' >
         <img onClick={()=> Navigate('/') }src={assets.logo} className='w-36' alt="" />
@@ -31,7 +36,7 @@ function Navbar() {
         </ul>
 
         <div className='flex items-center gap-6'>
-            <img src={assets.search_icon} className='w-5 cursor-pointer' alt="" />
+            <img  onClick={ handleSearchClick } src={assets.search_icon} className='w-5 cursor-pointer' alt="" />
             <div className='group relative'>
                 <img src={assets.profile_icon} className='w-5 cursor-pointer' alt="" />
                 <div className='group-hover:block hidden absolute dropdown-menu right-0 pt-4'>

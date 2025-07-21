@@ -14,6 +14,7 @@ import AOS from 'aos';
 import 'aos/dist/aos.css'; // Import AOS styles
 import Footer from './components/Footer';
 import CopyRight from './components/CopyRight';
+import SearchBar from './components/SearchBar';
 
 const App = () => {
 useEffect(()=>{
@@ -32,6 +33,7 @@ useEffect(()=>{
   return (
     <div className='px-4 sm:px-[5vw]  md:px-[7vw] lg:px-[9vw]'>
       <Navbar />
+      <SearchBar />
       <Routes>
         <Route path='/'  element={<Home/>}/>
         <Route path='/collection' element={<Collection/>}/>
