@@ -53,7 +53,6 @@ return totalCount;
   }
 
 useEffect(()=>{
-   console.log(cartItem);
 },[cartItem])
   
 
