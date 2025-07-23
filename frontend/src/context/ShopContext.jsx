@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import { products } from "../assets/assets";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 export const shopContext = createContext();
 
 const ShopContextProvider = (props) => {
@@ -87,7 +88,8 @@ useEffect(()=>{
      showSearch ,setShowSearch ,
      addToCart , cartItem,
      getCartCount , updateCartQuantity,
-     getCartAmount
+     getCartAmount,
+     
   };
 
   return (
