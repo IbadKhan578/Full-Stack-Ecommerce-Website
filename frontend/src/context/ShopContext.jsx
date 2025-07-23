@@ -5,7 +5,7 @@ export const shopContext = createContext();
 
 const ShopContextProvider = (props) => {
   const currency = "$";
-  const delivery_fee = 250;
+  const delivery_fee = 10;
   let [search,setSearch] = useState('');
   let [showSearch,setShowSearch] = useState(false);
   let [cartItem,setCartItem] = useState({});
@@ -58,7 +58,24 @@ return totalCount;
     setCartItem(cartData);
   }
 
+  const getCartAmount =  ()=>{
+    let totalAmount = 0;
+    for(const items in cartItem){
+      let itemInfo = products.find((product)=> product._id === items );
+      for(const item in cartItem[items]){
+        if(cartItem[items][item]>0){
+          totalAmount+= itemInfo.price * cartItem[items][item];
+
+        }
+      }
+    }
+
+return totalAmount;
+
+  }
+
 useEffect(()=>{
+
 },[cartItem])
   
 
@@ -69,7 +86,8 @@ useEffect(()=>{
     search , setSearch ,
      showSearch ,setShowSearch ,
      addToCart , cartItem,
-     getCartCount , updateCartQuantity
+     getCartCount , updateCartQuantity,
+     getCartAmount
   };
 
   return (
