@@ -4,7 +4,7 @@ import SectionTitle from '../components/SectionTitle';
 import { assets } from '../assets/assets';
 
 const Cart = () => {
-  let {products,currency,cartItem} = useContext(shopContext);
+  let {products,currency,cartItem,updateCartQuantity} = useContext(shopContext);
   const [cartData,setCartData] = useState([]);
 
   useEffect(()=>{
@@ -21,8 +21,15 @@ const Cart = () => {
       }
     }
     setCartData(tempData);
+    console.log(cartData);
 
   },[cartItem])
+
+  
+
+
+
+
 
   return (
     <div className=' border-t border-gray-200 pt-14'>
@@ -46,8 +53,8 @@ const Cart = () => {
                   </div>
                 </div>
               </div>
-              <input className='border border-gray-200 max-w-10 sm:max-w-20 px-1 sm:px-2 py-1' type="number" min={1} defaultValue={item.quantity} />
-              <img className='w-4 sm:w-5 mr-4 cursor-pointer' src={assets.bin_icon} alt="" />
+              <input onChange={(e)=> e.target.value==='' || e.target.value==='0'? null : updateCartQuantity(item.id,item.size,Number(e.target.value)) } className='border border-gray-200 max-w-10 sm:max-w-20 px-1 sm:px-2 py-1' type="number" min={1} defaultValue={item.quantity} />
+              <img onClick={()=>updateCartQuantity(item.id,item.size,0)} className='w-4 sm:w-5 mr-4 cursor-pointer' src={assets.bin_icon} alt="" />
               </div>
             )
 

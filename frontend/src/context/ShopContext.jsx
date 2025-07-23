@@ -52,6 +52,12 @@ return totalCount;
 
   }
 
+  const updateCartQuantity = async(itemId,size,quantity)=>{
+    let cartData = structuredClone(cartItem);
+    cartData[itemId][size] = quantity;
+    setCartItem(cartData);
+  }
+
 useEffect(()=>{
 },[cartItem])
   
@@ -63,7 +69,7 @@ useEffect(()=>{
     search , setSearch ,
      showSearch ,setShowSearch ,
      addToCart , cartItem,
-     getCartCount
+     getCartCount , updateCartQuantity
   };
 
   return (
