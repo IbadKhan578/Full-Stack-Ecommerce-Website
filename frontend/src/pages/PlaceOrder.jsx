@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react'
 import SectionTitle from '../components/SectionTitle'
 import CartTotal from '../components/CartTotal'
 import { assets } from '../assets/assets';
+import { useNavigate } from 'react-router-dom';
 
 const PlaceOrder = () => {
   const [method,setMethod] = useState('cod');
+  const navigate = useNavigate();
 
   useEffect(()=>{
     console.log(method);
@@ -26,6 +28,7 @@ const PlaceOrder = () => {
             className="border border-gray-300 px-3.5 rounded py-1.5 w-full "
             type="text"
             placeholder="First name"
+            required
           />
           <input
             className="border border-gray-300 px-3.5 rounded py-1.5 w-full "
@@ -98,7 +101,7 @@ const PlaceOrder = () => {
         </div>
           </div>
           <div className='mt-8 text-end'>
-            <button className='bg-black text-sm text-white py-3 px-16'>PLACE ORDER</button>
+            <button onClick={()=>navigate('/orders')} className='bg-black text-sm text-white py-3 px-16 cursor-pointer'>PLACE ORDER</button>
           </div>
         </div>
       </div>
