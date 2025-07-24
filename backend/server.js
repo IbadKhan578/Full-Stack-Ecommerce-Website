@@ -3,6 +3,7 @@ import cors from 'cors';
 import 'dotenv/config';
 import connectDb from './config/mongodb.js';
 import connectCloudinary from './config/cloudinary.js';
+import userRouter from './Routes/userRoute.js';
 
 // app config
 const app = express();
@@ -13,6 +14,10 @@ connectCloudinary();
  // middleware 
 app.use(cors());  // to run client and server on same ip
 app.use(express.json());  // to parse json
+
+// api end points
+app.use('/api/user',userRouter);
+
 
 app.get('/', (req, res) => {
   res.send("server is running");
