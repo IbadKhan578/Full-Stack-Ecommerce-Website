@@ -12,7 +12,30 @@ const createToken = async (id)=>{ // generate token using user id
 
 
 // route for user login
-const loginUser = async (req, res) => {};
+const loginUser = async (req, res) => {
+  try {
+    let { email, password } = req.body;
+    // check if user exists
+    const user = await userModel.findOne({ email });
+    if (!user) {
+      // if user does not exists , send response
+      return res.json({ success: false, message: "User doesn't exists" });
+    }
+
+    // check  if passowrd is correct
+    const isMatch = await bcrypt.compare(password, user.password);
+    // if the password is incorrect
+    if (!isMatch) {
+      return res.json({ success: false, message: "Incorrect Password" });
+    } else {
+      let token = await createToken(user._id);
+      return res.json({ success: true, token });
+    }
+  } catch (error) {
+    console.log(error);
+    return res.json({ success: false, message: error.message });
+  }
+};
 
 // route for user registration
 
