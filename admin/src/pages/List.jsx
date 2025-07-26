@@ -38,7 +38,7 @@ function List({token}) {
       console.log(response.data);
 
       if(response.data.success){
-        fetchList();
+      await  fetchList();
         toast.success(response.data.message)
       }else{
         toast.error(response.data.message);
