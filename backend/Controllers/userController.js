@@ -78,7 +78,7 @@ const registerUser = async (req, res) => {
 
    // after registeration we will provide a token to a user so by using that user can login
     const token = await createToken(user._id);
-    res.json({success:true, token})
+    res.json({success:true, token , message:"User Registerd successfully"})
 
 
 
