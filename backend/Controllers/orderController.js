@@ -16,40 +16,70 @@ const deliveryCharges= 10;
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 
-const placeOrder = async(req,res)=>{
+// const placeOrder = async(req,res)=>{
 
-    try {
+//     try {
 
-        let {userId, items, amount , address} = req.body;
+//         let {userId, items, amount , address} = req.body;
 
-        let orderData ={
-            userId,
-            items,
-            address,
-            amount,
-            paymentMethod:"COD",
-            payment:false,
-            date: Date.now()
-        }
+//         let orderData ={
+//             userId,
+//             items,
+//             address,
+//             amount,
+//             paymentMethod:"COD",
+//             payment:false,
+//             date: Date.now()
+//         }
 
-        const newOrder = new orderModel(orderData);
-        newOrder.save();
+//         const newOrder = new orderModel(orderData);
+//         newOrder.save();
 
-          // after placing order clear cart data
-          await userModel.findByIdAndUpdate(userId,{cartData:{}})
+//           // after placing order clear cart data
+//           await userModel.findByIdAndUpdate(userId,{cartData:{}})
 
 
-          res.json({success:true , message:"Order Placed"});
+//           res.json({success:true , message:"Order Placed"});
 
 
         
-    } catch (error) {
-        console.log(error);
-        res.json({success:false, message:error.message});
+//     } catch (error) {
+//         console.log(error);
+//         res.json({success:false, message:error.message});
         
-    }
+//     }
 
-}
+// }
+
+const placeOrder = async (req, res) => {
+  try {
+    const userId = req.body.userId; // fixed: get userId from req.body as set by middleware
+    const { items, amount, address } = req.body;
+
+    if (!userId) throw new Error("userId missing");
+
+    const orderData = {
+      userId,
+      items,
+      address,
+      amount,
+      paymentMethod: "COD",
+      payment: false,
+      date: Date.now(),
+    };
+
+    const newOrder = new orderModel(orderData);
+    await newOrder.save(); // ✅ use await to avoid race condition
+
+    await userModel.findByIdAndUpdate(userId, { cartData: {} });
+
+    res.json({ success: true, message: "Order Placed" });
+  } catch (error) {
+    console.log("Order Error:", error);
+    res.json({ success: false, message: error.message });
+  }
+};
+
 
 
 const placeOrderStripe = async(req,res)=>{
@@ -171,4 +201,24 @@ try {
 
 }
 
-export {placeOrder,placeOrderStripe , placeOrderRazorpay, AllOrders , userOrders , updateStatus}
+// Verify Stripe Payment
+const verifyStripePayment = async (req, res) => {
+  try {
+    const { sessionId, orderId } = req.body;
+    if (!sessionId || !orderId) {
+      return res.status(400).json({ success: false, message: "Missing sessionId or orderId" });
+    }
+    const session = await stripe.checkout.sessions.retrieve(sessionId);
+    if (session.payment_status === "paid") {
+      await orderModel.findByIdAndUpdate(orderId, { payment: true });
+      return res.json({ success: true, message: "Payment verified and order updated" });
+    } else {
+      return res.json({ success: false, message: "Payment not completed" });
+    }
+  } catch (error) {
+    console.log("Stripe Verify Error:", error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+export {placeOrder,placeOrderStripe , placeOrderRazorpay, AllOrders , userOrders , updateStatus, verifyStripePayment}

@@ -1,7 +1,7 @@
 import express from 'express';
 import adminAuth from '../middleware/adminAuth.js';
 import authUser from '../middleware/Auth.js';
-import {placeOrder,placeOrderStripe , placeOrderRazorpay, AllOrders , userOrders , updateStatus} from '../Controllers/orderController.js';
+import {placeOrder,placeOrderStripe , placeOrderRazorpay, AllOrders , userOrders , updateStatus, verifyStripePayment} from '../Controllers/orderController.js';
 
 const OrderRouter = express.Router();
 
@@ -14,6 +14,7 @@ OrderRouter.post('/status',adminAuth,updateStatus);
 OrderRouter.post('/place',authUser,placeOrder);
 OrderRouter.post('/stripe',authUser,placeOrderStripe);
 OrderRouter.post('/razorpay',authUser,placeOrderRazorpay);
+OrderRouter.post('/verify-stripe', verifyStripePayment);
 
 // user feature
 

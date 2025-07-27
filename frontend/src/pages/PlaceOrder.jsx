@@ -54,6 +54,7 @@ const PlaceOrder = () => {
       }
 
       let OrderData = {
+        
         address : formData,
         items: orderItems,
         amount: getCartAmount() + delivery_fee
@@ -62,7 +63,7 @@ const PlaceOrder = () => {
 
       switch(method){
         //  API call for COD
-        case 'cod':
+         case 'cod':
           let response = await axios.post(backendUrl+'/api/order/place', OrderData, {headers:{token}} )
           if(response.data.success){
             setCartItem({})
