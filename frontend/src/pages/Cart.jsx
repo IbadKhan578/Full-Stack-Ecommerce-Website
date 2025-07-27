@@ -11,7 +11,8 @@ const Cart = () => {
   const navigate = useNavigate();
 
   useEffect(()=>{
-    let tempData= [];
+    if(products.length > 0){
+      let tempData= [];
     for(let items in cartItem){
       for(let item in cartItem[items]){
         if(cartItem[items][item]>0){
@@ -23,10 +24,12 @@ const Cart = () => {
         }
       }
     }
-    setCartData(tempData);
+        setCartData(tempData);
+
+    }
     console.log(cartData);
 
-  },[cartItem])
+  },[cartItem,products])
 
   
 
