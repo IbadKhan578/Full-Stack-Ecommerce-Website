@@ -171,7 +171,7 @@ useEffect(()=>{
     delivery_fee,
     search , setSearch ,
      showSearch ,setShowSearch ,
-     addToCart , cartItem,
+     addToCart , cartItem, setCartItem,
      getCartCount , updateCartQuantity,
      getCartAmount,
      backendUrl,
